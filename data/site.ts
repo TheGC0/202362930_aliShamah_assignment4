@@ -1,10 +1,16 @@
+export const heroRoles = [
+  "Software Engineer",
+  "Full-Stack (Web & Mobile)",
+  "AI/ML Engineer",
+] as const;
+
 export const siteConfig = {
   name: "Ali Shamah",
   location: "Dhahran, Saudi Arabia",
   email: "ali_shamah@outlook.com",
   phone: "+966544142643",
   phoneDisplay: "+966 54 414 2643",
-  shortTitle: "Software Engineer | Full-Stack (Web & Mobile) | AI/ML",
+  shortTitle: heroRoles.join(" | "),
   longTitle: "Mobile & Web Application Developer | AI/ML",
   tagline:
     "I build production-grade web, mobile, and AI-powered products with a focus on usability, maintainability, and measurable business impact.",
@@ -29,6 +35,12 @@ export type TimelineEntry = {
 };
 
 export const experienceTimeline: TimelineEntry[] = [
+  {
+    role: "Board Member & CTO",
+    organization: "KIRIX",
+    period: "Jul 2025 - Present · 8 mos",
+    points: [],
+  },
   {
     role: "Full-Stack Developer / Technical Lead (Project-Based)",
     organization: "KIRIX Media",
@@ -59,22 +71,28 @@ export const experienceTimeline: TimelineEntry[] = [
 
 export const leadership = [
   {
-    role: "Web Dev Team Leader",
-    organization: "Gaming+ (KFUPM)",
-    period: "May 2025 - Jan 2026",
-    points: [
-      "Led a team of 5 developers to build and launch the official Gaming+ event website with Next.js.",
-      "Directed UI/UX and full-stack implementation including registration, scheduling, and live updates.",
-      "Mentored team members and managed milestones and delivery timelines.",
-    ],
+    role: "Website Development Leader",
+    organization: "Gaming+",
+    period: "Jun 2025 - Feb 2026 · 9 mos",
+    points: [],
   },
   {
-    role: "Financial Committee Member",
-    organization: "KFUPM World",
-    period: "2025",
-    points: [
-      "Supported budgeting, expense tracking, vendor payments, and reporting.",
-    ],
+    role: "Member",
+    organization: "KFUPM Computer Club",
+    period: "Sep 2024 - Feb 2026 · 1 yr 6 mos",
+    points: [],
+  },
+  {
+    role: "Finance Member",
+    organization: "KFUPM WORLD",
+    period: "Jul 2025 - Dec 2025 · 6 mos",
+    points: [],
+  },
+  {
+    role: "Shop Manager and System Developer",
+    organization: "KFUPM Gaming+",
+    period: "Sep 2024 - Dec 2024 · 4 mos",
+    points: [],
   },
 ] as const;
 

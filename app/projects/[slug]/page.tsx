@@ -79,19 +79,6 @@ export default async function ProjectCaseStudyPage({
         </p>
       </header>
 
-      <section className="overflow-hidden rounded-2xl border border-[var(--border)]">
-        <div className="relative h-72 sm:h-96">
-          <Image
-            src={project.image}
-            alt={`${project.title} hero image`}
-            fill
-            className="object-cover"
-            priority
-            sizes="(max-width: 1024px) 100vw, 1024px"
-          />
-        </div>
-      </section>
-
       <section className="grid gap-6 lg:grid-cols-2">
         <div className="glass-panel rounded-2xl p-6">
           <h2 className="text-2xl font-semibold text-[var(--text)]">Overview</h2>
@@ -161,27 +148,29 @@ export default async function ProjectCaseStudyPage({
         </div>
       </section>
 
-      <section className="glass-panel rounded-2xl p-6">
-        <h2 className="text-2xl font-semibold text-[var(--text)]">Screenshots</h2>
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          {project.gallery.map((imagePath) => (
-            <figure
-              key={imagePath}
-              className="overflow-hidden rounded-xl border border-[var(--border)]"
-            >
-              <div className="relative h-52">
-                <Image
-                  src={imagePath}
-                  alt={`${project.title} screenshot`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              </div>
-            </figure>
-          ))}
-        </div>
-      </section>
+      {project.gallery.length > 0 ? (
+        <section className="glass-panel rounded-2xl p-6">
+          <h2 className="text-2xl font-semibold text-[var(--text)]">Screenshots</h2>
+          <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            {project.gallery.map((imagePath) => (
+              <figure
+                key={imagePath}
+                className="overflow-hidden rounded-xl border border-[var(--border)]"
+              >
+                <div className="relative h-52">
+                  <Image
+                    src={imagePath}
+                    alt={`${project.title} screenshot`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+              </figure>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="glass-panel rounded-2xl p-6">
         <h2 className="text-2xl font-semibold text-[var(--text)]">Links</h2>

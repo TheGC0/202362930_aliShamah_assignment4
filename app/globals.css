@@ -173,13 +173,29 @@ a {
 .role-switch-track {
   display: inline-flex;
   align-items: baseline;
-  min-width: 18ch;
+  min-width: 0;
   white-space: nowrap;
 }
 
 .role-highlight {
   display: inline-flex;
   align-items: baseline;
+}
+
+.theme-logo-light {
+  display: block;
+}
+
+.theme-logo-dark {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-logo-light {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-logo-dark {
+  display: block;
 }
 
 @keyframes role-switch-in {
@@ -234,6 +250,6 @@ a {
 
 @media (max-width: 640px) {
   .role-switch-track {
-    min-width: 14ch;
+    min-width: 0;
   }
 }

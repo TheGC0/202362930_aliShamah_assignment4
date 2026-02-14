@@ -23,14 +23,19 @@ export function TimelineItem({
         </p>
         <h3 className="mt-2 text-xl font-semibold text-[var(--text)]">{role}</h3>
         <p className="mt-1 text-sm text-[var(--muted)]">{organization}</p>
-        <ul className="mt-4 space-y-2">
-          {points.map((point) => (
-            <li key={point} className="flex gap-2 text-sm text-[var(--muted)]">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" aria-hidden="true" />
-              <span>{point}</span>
-            </li>
-          ))}
-        </ul>
+        {points.length > 0 ? (
+          <ul className="mt-4 space-y-2">
+            {points.map((point) => (
+              <li key={point} className="flex gap-2 text-sm text-[var(--muted)]">
+                <span
+                  className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]"
+                  aria-hidden="true"
+                />
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </article>
   );

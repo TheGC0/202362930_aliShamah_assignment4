@@ -21,6 +21,9 @@ export type Project = {
   title: string;
   subtitle: string;
   impact: string;
+  brandLogo?: string;
+  brandLogoLight?: string;
+  brandLogoDark?: string;
   image: string;
   gallery: string[];
   featured: boolean;
@@ -44,8 +47,9 @@ export const projects: Project[] = [
     subtitle: "Official event platform for Gaming+ (KFUPM)",
     impact:
       "Delivered a production event website for registration, scheduling, and live updates while leading a 5-person web dev team.",
-    image: "/projects/gaming-plus.png",
-    gallery: ["/projects/gaming-plus.png", "/projects/gaming-plus-detail.png"],
+    brandLogo: "/gaming-plus-kfupm-logo.png",
+    image: "/gamingPlus_SH1.png",
+    gallery: ["/gamingPlus_SH1.png", "/gamingPlus_SH2.png"],
     featured: true,
     categories: ["Full-Stack"],
     tags: ["Next.js", "Team Leadership", "UI/UX", "Event Platform"],
@@ -78,7 +82,7 @@ export const projects: Project[] = [
       "Used UI-first planning to reduce rework during implementation.",
     ],
     links: {
-      live: "https://example.com/gaming-plus",
+      live: "https://gamingplus.gg/LandPage",
       github: "",
       repoPrivate: true,
     },
@@ -89,8 +93,10 @@ export const projects: Project[] = [
     subtitle: "Internal operations suite for KIRIX Media",
     impact:
       "Centralized internal workflows across inventory, orders, accounts, and messages in one dashboard used by operations teams.",
-    image: "/projects/kirix-dashboard.png",
-    gallery: ["/projects/kirix-dashboard.png", "/projects/kirix-dashboard-detail.png"],
+    brandLogoLight: "/kirix_logo_black.png",
+    brandLogoDark: "/kirix_logo_white.png",
+    image: "/kirix_SH1.png",
+    gallery: ["/kirix_SH1.png", "/kirix_SH2.png"],
     featured: true,
     categories: ["Full-Stack", "Dashboards"],
     tags: ["Dashboard", "Operations", "Automation", "Full-Stack"],
@@ -125,7 +131,7 @@ export const projects: Project[] = [
       "Learned to prioritize usability in high-frequency admin interfaces.",
     ],
     links: {
-      live: "https://example.com/kirix-dashboard",
+      live: "https://kirix.sa/",
       github: "",
       repoPrivate: true,
     },
@@ -136,8 +142,9 @@ export const projects: Project[] = [
     subtitle: "Computer vision pipeline for plate detection and ticket generation",
     impact:
       "Automated the flow from plate capture to database matching and ticket issuance using hosted YOLO-style inference with OpenCV preprocessing.",
+    brandLogo: "/plate_reader.png",
     image: "/projects/plate-detector.png",
-    gallery: ["/projects/plate-detector.png", "/projects/plate-detector-detail.png"],
+    gallery: [],
     featured: true,
     categories: ["AI/ML", "Computer Vision"],
     tags: ["OpenCV", "YOLO-style inference", "Automation", "Database Matching"],
@@ -170,7 +177,6 @@ export const projects: Project[] = [
       "Strengthened approach to integrating CV systems into real business workflows.",
     ],
     links: {
-      demo: "https://example.com/plate-detector-demo",
       github: "",
       repoPrivate: true,
     },
@@ -216,7 +222,6 @@ export const projects: Project[] = [
       "Reinforced best practices around reproducibility and model serving boundaries.",
     ],
     links: {
-      demo: "https://example.com/mdar-api-docs",
       github: "",
       repoPrivate: true,
     },
@@ -260,7 +265,6 @@ export const projects: Project[] = [
       "Improved product thinking around real user shopping flows.",
     ],
     links: {
-      demo: "https://example.com/mqadi",
       github: "",
       repoPrivate: true,
     },
@@ -306,7 +310,6 @@ export const projects: Project[] = [
       "Improved UX decisions for high-frequency, task-driven environments.",
     ],
     links: {
-      demo: "https://example.com/karfeshha-pos",
       github: "",
       repoPrivate: true,
     },

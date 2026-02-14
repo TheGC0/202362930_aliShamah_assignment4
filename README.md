@@ -1,101 +1,121 @@
-# Ali Shamah Portfolio
+# Assignment 1 Portfolio - Ali Shamah
 
-Modern, SEO-focused portfolio built with Next.js App Router, TypeScript, and Tailwind CSS.
+Professional, responsive personal portfolio built with Next.js + TypeScript.
 
-## Stack
+This implementation is intentionally above the minimum assignment baseline while still covering every required foundation item.
 
-- Next.js 16 (App Router, compatible with 14+ requirement)
+## Live Overview
+- Main page sections: About, Featured Projects, Experience, Skills, Leadership, Contact
+- Dedicated pages: Projects, Project Details, Links Hub, Resume, Contact
+- Theme toggle + interactive project search/filter
+
+## Assignment 1 Requirements Coverage
+
+### 1) Repository Setup
+- Clean folder structure with reusable components and data-driven content.
+- Git history and branch workflow can be managed in GitHub before submission.
+- If your instructor requires exact naming, publish this in a public repo named:
+  - `<studentid>-<firstname><lastname>-assignment1`
+
+### 2) Content Requirements
+- **About Me**: intro + one-liner tagline + profile avatar
+- **Projects**: 2+ projects (currently 6) with title, short description, and images
+- **Contact**: form with Name, Email, Message (frontend-only, no backend required)
+
+### 3) Responsive Design
+- Mobile-first layout using Tailwind CSS (Flexbox/Grid).
+- Works across mobile, tablet, and desktop.
+
+### 4) Interactivity
+- Theme toggle (light/dark/system)
+- Animated role text in hero
+- Smooth section scrolling and active nav state
+- Project search + category filters
+
+### 5) AI Integration
+- Detailed report: `docs/ai-usage-report.md`
+- Technical documentation: `docs/technical-documentation.md`
+- AI used for implementation support, debugging, and documentation drafting with manual review.
+
+## Tech Stack
+- Next.js (App Router)
 - TypeScript
-- Tailwind CSS v4
-- `next/image`, `next/font`
-- Data-driven content from local TypeScript files
+- Tailwind CSS
+- next/image, next/font
 
-## Features
+## Project Structure
+```text
+portfolio/
+|-- app/
+|-- components/
+|-- data/
+|-- public/
+|-- docs/
+|   |-- ai-usage-report.md
+|   |-- technical-documentation.md
+|   `-- rubric-self-check.md
+`-- README.md
+```
 
-- Multi-page portfolio:
-  - `/` Home (hero, about, featured projects, experience, skills, leadership, contact)
-  - `/projects` Projects index with category filters and search
-  - `/projects/[slug]` Project case studies with prev/next navigation
-  - `/links` Links hub (Linktree-style)
-  - `/resume` Resume summary + PDF download
-  - `/contact` Contact form + direct links
-- Responsive layout with sticky navigation
-- Theme toggle (system default, with light/dark override)
-- Accessibility basics: keyboard focus styles, semantic landmarks, ARIA labels
-- SEO:
-  - Metadata and social cards
-  - JSON-LD (`Person`, `WebSite`)
-  - `sitemap.xml` via `app/sitemap.ts`
-  - `robots.txt` via `app/robots.ts`
-
-## Content Sources
-
-- `data/site.ts` for profile, experience, skills, certifications, and links.
-- `data/projects.ts` as the single source of truth for project cards and case studies.
-
-## Local Development
+## Local Setup
 
 1. Install dependencies:
-
 ```bash
 npm install
 ```
 
 2. Run development server:
-
 ```bash
 npm run dev
 ```
 
 3. Open:
-
 ```text
 http://localhost:3000
 ```
 
-## Build & Production
-
-Build production bundle:
+## Production Build
 
 ```bash
+npm run lint
 npm run build
-```
-
-Run production server locally:
-
-```bash
 npm run start
 ```
 
-## Deploy to Vercel
+## Quality and Validation
+- Linting: `npm run lint`
+- Production readiness: `npm run build`
+- Responsive checks: mobile, tablet, desktop in browser DevTools
+- Accessibility checks: keyboard navigation, focus states, semantic structure
 
-1. Push this repository to GitHub.
-2. Import the repo in Vercel.
-3. Use default Next.js settings.
-4. Deploy.
+## Deployment (Vercel)
+1. Push repository to GitHub.
+2. Import project into Vercel.
+3. Deploy with default Next.js settings.
 
-Optional after deployment:
-- Update `siteConfig.url` in `data/site.ts` with your final domain.
-- Replace placeholder social URLs in `data/site.ts`.
+Live deployment (optional):
+- https://ali-shamah-portfolio.vercel.app
 
-## Assets
+## Submission Checklist
+- Public repository is created and accessible.
+- Repository name matches instructor format exactly:
+  - `<studentid>-<firstname><lastname>-assignment1`
+- README, `docs/ai-usage-report.md`, and `docs/technical-documentation.md` are updated.
+- Core requirements verified: About, Projects (2+), Contact form (Name/Email/Message), responsive behavior, and JavaScript interactivity.
+- Final validation completed:
+  - `npm run lint`
+  - `npm run build`
 
-- Favicon/logo: `public/logo_noBg.png` and `app/favicon.ico`
-- Project placeholders: `public/projects/*.png`
-- Open Graph image: `public/og-cover.png`
-- Resume PDF: `public/resume.pdf` (replace with final CV file)
-
-## File Map (Key)
-
-- `app/layout.tsx` global layout, metadata, JSON-LD
-- `app/globals.css` theme tokens and base styles
-- `app/page.tsx` home page
+## Key Files
+- `app/page.tsx` home sections
 - `app/projects/page.tsx` project index
-- `app/projects/[slug]/page.tsx` case study template
-- `app/links/page.tsx` links hub
-- `app/resume/page.tsx` resume page
-- `app/contact/page.tsx` contact route
-- `app/sitemap.ts` sitemap generation
-- `app/robots.ts` robots rules
-- `components/*` reusable UI building blocks
-- `data/site.ts` and `data/projects.ts` data layer
+- `app/projects/[slug]/page.tsx` case-study template
+- `app/contact/page.tsx` contact page
+- `components/contact-form.tsx` Name/Email/Message form
+- `data/site.ts` personal/profile data
+- `data/projects.ts` project data source
+- `docs/ai-usage-report.md` AI usage documentation
+- `docs/technical-documentation.md` technical explanation
+
+## AI Use Summary (Short)
+AI tools were used for iterative UI improvement, code suggestions, and debugging support. All generated outputs were reviewed, modified, and validated manually for correctness and academic integrity.

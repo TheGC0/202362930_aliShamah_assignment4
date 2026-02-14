@@ -105,6 +105,7 @@ const websiteSchema = {
 const themeInitScript = `
 (function () {
   try {
+    // Apply the saved/system theme before React hydration to avoid flash and mismatch.
     var key = 'ali-shamah-theme';
     var stored = localStorage.getItem(key);
     var preference = stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system';

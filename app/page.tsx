@@ -11,6 +11,7 @@ import {
   certifications,
   education,
   experienceTimeline,
+  heroRoles,
   leadership,
   siteConfig,
   skillGroups,
@@ -23,23 +24,19 @@ export default function HomePage() {
         <div className="glass-panel rounded-3xl p-8 sm:p-12">
           <div className="grid items-start gap-8 lg:grid-cols-[1.35fr_0.65fr]">
             <div>
-              <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xl leading-tight text-[var(--text)] sm:text-4xl">
+              <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xl leading-tight text-[var(--text)] sm:flex-nowrap sm:text-3xl">
                 <span>Hello, I&apos;m</span>
                 <span className="role-highlight font-medium">
-                  <HeroRoleRotator
-                    roles={[
-                      "Software Engineer",
-                      "Full-Stack Developer",
-                      "AI/ML Engineer",
-                      "Mobile Developer",
-                      "Business Analyst",
-                    ]}
-                  />
+                  <HeroRoleRotator roles={heroRoles} />
                 </span>
               </p>
               <h1 className="mt-6 text-balance text-5xl font-semibold tracking-tight text-[var(--text)] sm:text-7xl">
                 {siteConfig.name}
               </h1>
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+                Software Engineer focused on full-stack web/mobile development and practical AI/ML
+                systems that solve real business problems.
+              </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link

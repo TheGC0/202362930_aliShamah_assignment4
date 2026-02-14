@@ -69,6 +69,7 @@ export function SiteHeader() {
       return;
     }
 
+    // Track the most visible home section to keep nav highlight in sync while scrolling.
     const observer = new IntersectionObserver(
       (entries) => {
         const visibleEntries = entries
