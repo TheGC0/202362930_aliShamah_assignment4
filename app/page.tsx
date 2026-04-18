@@ -8,6 +8,7 @@ import { QuoteWidget } from "@/components/quote-widget";
 import { SkillGroup } from "@/components/skill-group";
 import { TimelineItem } from "@/components/timeline-item";
 import { SectionHeader } from "@/components/ui/section-header";
+import { TimeGreetingDynamic } from "@/components/time-greeting-dynamic";
 import { VisitorTimerDynamic } from "@/components/visitor-timer-dynamic";
 import { featuredProjects } from "@/data/projects";
 import {
@@ -27,8 +28,9 @@ export default function HomePage() {
         <div className="glass-panel rounded-3xl p-8 sm:p-12">
           <div className="grid items-start gap-8 lg:grid-cols-[1.35fr_0.65fr]">
             <div>
+              <TimeGreetingDynamic />
               <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xl leading-tight text-[var(--text)] sm:flex-nowrap sm:text-3xl">
-                <span>Hello, I&apos;m</span>
+                <span>I&apos;m</span>
                 <span className="role-highlight font-medium">
                   <HeroRoleRotator roles={heroRoles} />
                 </span>

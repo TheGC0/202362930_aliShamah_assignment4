@@ -16,8 +16,11 @@ type FieldErrors = {
 
 type SubmitStatus = "idle" | "submitting" | "sent" | "error";
 
-const STORAGE_KEY = "contact-form-name";
-const MAX_MESSAGE = 500;
+const STORAGE_KEY       = "contact-form-name";
+const DRAFT_STORAGE_KEY = "contact-form-draft";
+const MAX_MESSAGE       = 500;
+
+type DraftData = { name: string; email: string; subject: string; message: string };
 
 /* ── Validation ──────────────────────────────────────────────────────────── */
 
@@ -98,30 +101,49 @@ function StepIndicator({ current }: { current: Step }) {
 /* ── Main component ──────────────────────────────────────────────────────── */
 
 export function ContactForm() {
-  const [step,    setStep]    = useState<Step>(1);
-  const [name,    setName]    = useState("");
-  const [email,   setEmail]   = useState("");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
-  const [errors,  setErrors]  = useState<FieldErrors>({});
-  const [status,  setStatus]  = useState<SubmitStatus>("idle");
+  const [step,          setStep]          = useState<Step>(1);
+  const [name,          setName]          = useState("");
+  const [email,         setEmail]         = useState("");
+  const [subject,       setSubject]       = useState("");
+  const [message,       setMessage]       = useState("");
+  const [errors,        setErrors]        = useState<FieldErrors>({});
+  const [status,        setStatus]        = useState<SubmitStatus>("idle");
+  const [draftRestored, setDraftRestored] = useState(false);
 
-  // Restore saved name from localStorage on mount
+  // Restore full draft from localStorage on mount
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) setName(saved);
+      const raw = localStorage.getItem(DRAFT_STORAGE_KEY);
+      if (raw) {
+        const draft: DraftData = JSON.parse(raw);
+        if (draft.name)    setName(draft.name);
+        if (draft.email)   setEmail(draft.email);
+        if (draft.subject) setSubject(draft.subject);
+        if (draft.message) setMessage(draft.message);
+        // Only show the banner if there was meaningful draft content
+        if (draft.message?.trim() || draft.subject?.trim()) setDraftRestored(true);
+      } else {
+        // Fall back to legacy name-only key
+        const savedName = localStorage.getItem(STORAGE_KEY);
+        if (savedName) setName(savedName);
+      }
     } catch { /* localStorage unavailable */ }
   }, []);
 
-  // Persist name to localStorage as user types
+  // Persist the entire form draft on every keystroke
+  function saveDraft(patch: Partial<DraftData>) {
+    try {
+      const current: DraftData = { name, email, subject, message, ...patch };
+      localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(current));
+      // Keep legacy name key in sync
+      if (current.name.trim()) localStorage.setItem(STORAGE_KEY, current.name.trim());
+    } catch { /* localStorage unavailable */ }
+  }
+
   const handleNameChange = (value: string) => {
     setName(value);
     if (errors.name) setErrors((prev) => ({ ...prev, name: undefined }));
-    try {
-      if (value.trim()) localStorage.setItem(STORAGE_KEY, value.trim());
-      else              localStorage.removeItem(STORAGE_KEY);
-    } catch { /* localStorage unavailable */ }
+    saveDraft({ name: value });
   };
 
   /* ── Step navigation ─────────────────────────────────────────────────── */
@@ -157,6 +179,8 @@ export function ContactForm() {
       );
       window.location.href = `mailto:${siteConfig.email}?subject=${sub}&body=${body}`;
       setStatus("sent");
+      // Clear draft after successful submission
+      try { localStorage.removeItem(DRAFT_STORAGE_KEY); } catch { /* ignore */ }
     } catch {
       setStatus("error");
     }
@@ -179,6 +203,27 @@ export function ContactForm() {
       className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-soft)]"
     >
       <StepIndicator current={step} />
+
+      {/* Draft-restored notification */}
+      {draftRestored && (
+        <div
+          role="status"
+          className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-subtle)] px-4 py-2.5 text-xs text-[var(--muted)]"
+        >
+          <span>✏️ Draft restored from your last visit.</span>
+          <button
+            type="button"
+            onClick={() => {
+              setName(""); setEmail(""); setSubject(""); setMessage("");
+              setDraftRestored(false);
+              try { localStorage.removeItem(DRAFT_STORAGE_KEY); } catch { /* ignore */ }
+            }}
+            className="text-[var(--accent)] underline-offset-2 hover:underline"
+          >
+            Discard
+          </button>
+        </div>
+      )}
 
       {/* ── Step 1: Identity ─────────────────────────────────────────── */}
       {step === 1 && (
@@ -231,6 +276,7 @@ export function ContactForm() {
               onChange={(e) => {
                 setEmail(e.target.value);
                 if (errors.email) setErrors((prev) => ({ ...prev, email: undefined }));
+                saveDraft({ email: e.target.value });
               }}
               aria-describedby={errors.email ? "cf-email-error" : undefined}
               aria-invalid={!!errors.email}
@@ -272,7 +318,7 @@ export function ContactForm() {
               name="subject"
               placeholder="Project inquiry, collaboration…"
               value={subject}
-              onChange={(e) => setSubject(e.target.value)}
+              onChange={(e) => { setSubject(e.target.value); saveDraft({ subject: e.target.value }); }}
               className={`${inputBase} ${inputOk}`}
             />
           </div>
@@ -304,6 +350,7 @@ export function ContactForm() {
               onChange={(e) => {
                 setMessage(e.target.value);
                 if (errors.message) setErrors((prev) => ({ ...prev, message: undefined }));
+                saveDraft({ message: e.target.value });
               }}
               aria-describedby={errors.message ? "cf-message-error" : "cf-message-hint"}
               aria-invalid={!!errors.message}

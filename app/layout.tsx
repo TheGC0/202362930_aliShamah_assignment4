@@ -4,6 +4,7 @@ import Script from "next/script";
 import { Suspense } from "react";
 
 import { AnalyticsPlaceholder } from "@/components/analytics-placeholder";
+import { ScrollProgress } from "@/components/scroll-progress";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { siteConfig } from "@/data/site";
@@ -165,6 +166,7 @@ export default function RootLayout({
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[var(--page-gradient)]" />
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_top,_var(--accent-soft),_transparent_62%)] opacity-70" />
 
+          <ScrollProgress />
           <SiteHeader />
 
           <main id="content" className="mx-auto w-full max-w-6xl px-6 pb-8 pt-10 sm:pt-14">
