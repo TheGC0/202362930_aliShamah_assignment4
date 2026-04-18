@@ -112,22 +112,28 @@ export function ContactForm() {
 
   // Restore full draft from localStorage on mount
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(DRAFT_STORAGE_KEY);
-      if (raw) {
-        const draft: DraftData = JSON.parse(raw);
-        if (draft.name)    setName(draft.name);
-        if (draft.email)   setEmail(draft.email);
-        if (draft.subject) setSubject(draft.subject);
-        if (draft.message) setMessage(draft.message);
-        // Only show the banner if there was meaningful draft content
-        if (draft.message?.trim() || draft.subject?.trim()) setDraftRestored(true);
-      } else {
-        // Fall back to legacy name-only key
-        const savedName = localStorage.getItem(STORAGE_KEY);
-        if (savedName) setName(savedName);
+    const restoreDraft = window.setTimeout(() => {
+      try {
+        const raw = localStorage.getItem(DRAFT_STORAGE_KEY);
+        if (raw) {
+          const draft: DraftData = JSON.parse(raw);
+          if (draft.name) setName(draft.name);
+          if (draft.email) setEmail(draft.email);
+          if (draft.subject) setSubject(draft.subject);
+          if (draft.message) setMessage(draft.message);
+          // Only show the banner if there was meaningful draft content
+          if (draft.message?.trim() || draft.subject?.trim()) setDraftRestored(true);
+        } else {
+          // Fall back to legacy name-only key
+          const savedName = localStorage.getItem(STORAGE_KEY);
+          if (savedName) setName(savedName);
+        }
+      } catch {
+        /* localStorage unavailable */
       }
-    } catch { /* localStorage unavailable */ }
+    }, 0);
+
+    return () => window.clearTimeout(restoreDraft);
   }, []);
 
   // Persist the entire form draft on every keystroke
@@ -230,9 +236,11 @@ export function ContactForm() {
         <fieldset className="space-y-4 border-none p-0">
           <legend className="sr-only">Your information</legend>
 
-          <p className="text-xs leading-relaxed text-[var(--muted)]">
-            Start by telling me a bit about yourself.
-          </p>
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-subtle)] px-4 py-3 text-xs leading-relaxed text-[var(--muted)]">
+            <strong className="block text-[var(--text)]">Step 1 of 3 — Your details</strong>
+            Enter your name and email address so I know how to reach you back. Your name is
+            automatically saved for your next visit. Click <strong className="text-[var(--text)]">Next →</strong> when ready.
+          </div>
 
           {/* Name */}
           <div>
@@ -304,9 +312,12 @@ export function ContactForm() {
         <fieldset className="space-y-4 border-none p-0">
           <legend className="sr-only">Your message</legend>
 
-          <p className="text-xs leading-relaxed text-[var(--muted)]">
-            What would you like to discuss?
-          </p>
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-subtle)] px-4 py-3 text-xs leading-relaxed text-[var(--muted)]">
+            <strong className="block text-[var(--text)]">Step 2 of 3 — Your message</strong>
+            Add an optional subject line, then write your message (minimum 10 characters, max 500).
+            Use <strong className="text-[var(--text)]">← Back</strong> to correct your details, or{" "}
+            <strong className="text-[var(--text)]">Review →</strong> to preview before sending.
+          </div>
 
           {/* Subject (optional) */}
           <div>
@@ -391,9 +402,12 @@ export function ContactForm() {
         <fieldset className="space-y-4 border-none p-0">
           <legend className="sr-only">Review and send</legend>
 
-          <p className="text-xs leading-relaxed text-[var(--muted)]">
-            Check your details before sending. Your email client will open with a pre-filled draft.
-          </p>
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-subtle)] px-4 py-3 text-xs leading-relaxed text-[var(--muted)]">
+            <strong className="block text-[var(--text)]">Step 3 of 3 — Review & send</strong>
+            Check your details below. Click <strong className="text-[var(--text)]">← Edit</strong> to go back and make changes,
+            or <strong className="text-[var(--text)]">Send message ✉</strong> to open your email app with a
+            pre-filled draft — just hit send from there.
+          </div>
 
           {/* Summary table */}
           <dl className="divide-y divide-[var(--border)] rounded-xl border border-[var(--border)] bg-[var(--surface-subtle)] text-sm">
