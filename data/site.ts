@@ -16,7 +16,7 @@ export const siteConfig = {
     "I build production-grade web, mobile, and AI-powered products with a focus on usability, maintainability, and measurable business impact.",
   description:
     "Ali Shamah is a Software Engineer focused on full-stack web/mobile applications and applied AI/ML systems.",
-  url: "https://ali-shamah-portfolio.vercel.app",
+  url: "https://alishamah.sa",
   links: {
     linkedin: "https://www.linkedin.com/in/ali-shamah/",
     github: "https://github.com/TheGC0",

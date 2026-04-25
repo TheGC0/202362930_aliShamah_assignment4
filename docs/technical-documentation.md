@@ -3,7 +3,7 @@
 ## 1) Project Overview
 This project is a professional personal portfolio for **Ali Shamah**, completed for Assignment 4 after being built across the earlier assignment milestones. It covers the final personal web application requirements: a complete responsive portfolio, polished UI, project case studies, contact workflow, documentation, AI-use transparency, and presentation preparation.
 
-**Live deployment:** https://ali-shamah-portfolio.vercel.app
+**Live deployment:** https://alishamah.sa
 
 ---
 

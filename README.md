@@ -2,7 +2,7 @@
 
 Final personal web application for Assignment 4. The project is a polished portfolio built with Next.js, TypeScript, and Tailwind CSS, showcasing full-stack, mobile, dashboard, and AI/ML work through a responsive multi-page application.
 
-Live deployment: https://ali-shamah-portfolio.vercel.app
+Live deployment: https://alishamah.sa
 
 ## Project Overview
 
@@ -168,7 +168,7 @@ Detailed report: `docs/ai-usage-report.md`
 
 ## Deployment
 
-The app is deployed on Vercel at: https://ali-shamah-portfolio.vercel.app
+The app is deployed on Vercel at: https://alishamah.sa
 
 To deploy your own copy:
 

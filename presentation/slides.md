@@ -9,7 +9,7 @@
 *Assignment 4 | Final Personal Web Application*
 
 > Student: Ali Shamah | ID: 202362930
-> Live: https://ali-shamah-portfolio.vercel.app
+> Live: https://alishamah.sa
 
 **Speaker notes:**
 Welcome. This is my final personal portfolio web application built over four assignments. It brings together everything I have learned about professional web development, from responsive UI to API integration, accessibility, and performance.
@@ -191,9 +191,9 @@ These lessons apply directly to real professional work. The portfolio is somethi
 - Comprehensive documentation: README, technical docs, AI usage report
 - Professional design: responsive, accessible, performant
 
-**Live URL:** https://ali-shamah-portfolio.vercel.app
+**Live URL:** https://alishamah.sa
 
-**Repository:** github.com/AliShamah/202362930_aliShamah_assignment4
+**Repository:** github.com/TheGC0/202362930_aliShamah_assignment4
 
 **Speaker notes:**
 This project is now a foundation I will keep improving and use professionally. Thank you.
