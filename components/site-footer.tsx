@@ -66,7 +66,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-[var(--border)] px-6 py-4 text-center text-xs text-[var(--muted)]">
-        <p>(c) {new Date().getFullYear()} {siteConfig.name}. Built with Next.js + TypeScript.</p>
+        <p>&copy; {new Date().getFullYear()} {siteConfig.name}. Built with Next.js &amp; TypeScript.</p>
       </div>
     </footer>
   );

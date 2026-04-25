@@ -3,13 +3,13 @@ import Link from "next/link";
 
 import { GitHubStats } from "@/components/github-stats";
 import { HeroRoleRotator } from "@/components/hero-role-rotator";
+import { HeroSnapshot } from "@/components/hero-snapshot";
 import { ProjectCard } from "@/components/project-card";
 import { QuoteWidget } from "@/components/quote-widget";
 import { SkillGroup } from "@/components/skill-group";
 import { TimelineItem } from "@/components/timeline-item";
 import { SectionHeader } from "@/components/ui/section-header";
 import { TimeGreetingDynamic } from "@/components/time-greeting-dynamic";
-import { VisitorTimerDynamic } from "@/components/visitor-timer-dynamic";
 import { featuredProjects } from "@/data/projects";
 import {
   certifications,
@@ -24,12 +24,12 @@ import {
 export default function HomePage() {
   return (
     <div className="space-y-24 pb-8">
-      <section id="home" className="section-anchor-offset">
-        <div className="glass-panel rounded-3xl p-8 sm:p-12">
-          <div className="grid items-start gap-8 lg:grid-cols-[1.35fr_0.65fr]">
-            <div>
+      <section id="home" className="section-anchor-offset max-w-full overflow-hidden">
+        <div className="glass-panel rounded-2xl p-5 sm:rounded-3xl sm:p-12">
+          <div className="grid min-w-0 items-start gap-7 overflow-hidden lg:grid-cols-[minmax(0,1fr)_minmax(14rem,20rem)] lg:gap-8">
+            <div className="min-w-0">
               <TimeGreetingDynamic />
-              <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xl leading-tight text-[var(--text)] sm:flex-nowrap sm:text-3xl">
+              <p className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1 text-xl leading-tight text-[var(--text)] sm:text-3xl">
                 <span>I&apos;m</span>
                 <span className="role-highlight font-medium">
                   <HeroRoleRotator roles={heroRoles} />
@@ -58,10 +58,7 @@ export default function HomePage() {
                 </Link>
               </div>
 
-              {/* Visitor timer – shows time spent on the page */}
-              <div className="mt-5">
-                <VisitorTimerDynamic />
-              </div>
+              <HeroSnapshot />
 
               <div className="mt-4 flex flex-wrap gap-3">
                 <a
@@ -90,10 +87,10 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="mx-auto w-full max-w-xs lg:mx-0 lg:-mt-4 lg:self-start lg:justify-self-end">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--surface-subtle)]">
+            <div className="hero-media mx-auto w-full min-w-0 max-w-64 sm:max-w-xs lg:mx-0 lg:max-w-full lg:self-start lg:justify-self-stretch">
+              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-subtle)] sm:rounded-3xl">
                 <Image
-                  src="/image.png"
+                  src="/images/portrait.webp"
                   alt="Ali Shamah portrait"
                   fill
                   priority

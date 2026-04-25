@@ -77,6 +77,8 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
@@ -106,10 +108,21 @@ a {
 }
 
 .glass-panel {
+  max-width: 100%;
   border: 1px solid var(--border);
   background: var(--surface);
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(10px);
+}
+
+.hero-media {
+  contain: layout paint;
+}
+
+@media (max-width: 1023px) {
+  .hero-media {
+    width: min(100%, 16rem);
+  }
 }
 
 .futuristic-divider {
@@ -161,12 +174,16 @@ a {
   display: inline-flex;
   align-items: baseline;
   min-width: 0;
+  max-width: 100%;
   white-space: nowrap;
 }
 
 .role-highlight {
   display: inline-flex;
   align-items: baseline;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .theme-logo-light {
@@ -285,4 +302,48 @@ a {
 
 .form-banner {
   animation: fade-in-down 0.3s ease both;
+}
+
+/* ─── Print styles (resume page) ─────────────────────────────────────────── */
+
+@media print {
+  header,
+  footer,
+  .back-to-top,
+  [aria-label="Back to top"],
+  nav {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+    font-size: 11pt;
+  }
+
+  .glass-panel {
+    border: 1px solid #ccc;
+    box-shadow: none;
+    backdrop-filter: none;
+    background: white;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #555;
+  }
+
+  a[href^="mailto:"]::after,
+  a[href^="tel:"]::after {
+    content: none;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+
+  section {
+    page-break-inside: avoid;
+  }
 }

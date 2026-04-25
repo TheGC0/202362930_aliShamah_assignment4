@@ -36,7 +36,8 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
                 alt={`${project.title} logo`}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                priority={priority}
+                loading={priority ? "eager" : "lazy"}
+                fetchPriority={priority ? "high" : undefined}
                 className="theme-logo-light object-contain p-5 sm:p-6"
               />
             ) : null}
@@ -46,7 +47,8 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
                 alt={`${project.title} logo`}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                priority={priority}
+                loading={priority ? "eager" : "lazy"}
+                fetchPriority={priority ? "high" : undefined}
                 className="theme-logo-dark object-contain p-5 sm:p-6"
               />
             ) : null}
@@ -57,7 +59,8 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
             alt={`${project.title} preview`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-            priority={priority}
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : undefined}
             className={
               usesBrandVisual
                 ? "object-contain p-5 sm:p-6"

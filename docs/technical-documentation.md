@@ -1,7 +1,7 @@
 # Technical Documentation
 
 ## 1) Project Overview
-This project is a professional personal portfolio for **Ali Shamah**, built across Assignments 1, 2, and 3. It exceeds the assignment minimums while covering every required feature: About, Projects with filter/sort, Contact with multi-step validation, external API integrations, state management, and performance optimization.
+This project is a professional personal portfolio for **Ali Shamah**, completed for Assignment 4 after being built across the earlier assignment milestones. It covers the final personal web application requirements: a complete responsive portfolio, polished UI, project case studies, contact workflow, documentation, AI-use transparency, and presentation preparation.
 
 **Live deployment:** https://ali-shamah-portfolio.vercel.app
 
@@ -36,19 +36,35 @@ This project is a professional personal portfolio for **Ali Shamah**, built acro
 - `data/site.ts` — profile, social links, experience timeline, leadership, education, skills, certifications
 - `data/projects.ts` — single source of truth for all 6 projects (includes `date` field for sort)
 
+### Static Assets
+- `public/images/` — optimized WebP assets used by the live app for the hero portrait and large project screenshots
+- `public/projects/` — smaller project preview/detail assets
+- `public/*.pdf` — resume/CV files
+- `public/og-cover.png` — OpenGraph and Twitter preview image
+
+### Presentation Assets
+- `presentation/slides.md` — 5-7 minute slide outline
+- `presentation/demo-video-script.md` — recording script and demo flow
+- `presentation/README.md` — export guidance for `slides.pdf` and `demo-video.mp4`
+
 ---
 
 ## 4) Components Reference
 
-### Assignment 3 — New Components
+### Assignment 4 — Final Polish Components
+
+| Component | File | Purpose |
+|-----------|------|---------|
+| HeroSnapshot | `components/hero-snapshot.tsx` | Displays a compact hero summary of age, focus areas, and location without interrupting the main call-to-action flow |
+| BackToTop | `components/back-to-top.tsx` | Shows a floating return-to-top button after the visitor scrolls past the hero area |
+
+### Assignment 3 — Interactive Components
 
 | Component | File | Purpose |
 |-----------|------|---------|
 | QuoteWidget | `components/quote-widget.tsx` | Fetches a random quote from Quotable.io API. Shows skeleton loading, refresh button, and falls back to 4 hardcoded quotes if the API is unreachable |
-| VisitorTimer | `components/visitor-timer.tsx` | Tracks and displays time spent on the page (0s → Xm Xs → Xh Xm). Runs client-side only via `setInterval` |
-| VisitorTimerDynamic | `components/visitor-timer-dynamic.tsx` | Client-component wrapper enabling `ssr: false` dynamic import of VisitorTimer from a Server Component page |
 | TimeGreeting | `components/time-greeting.tsx` | Renders "Good morning/afternoon/evening" based on the visitor's local clock. Updates at the top of each hour. Client-side only |
-| TimeGreetingDynamic | `components/time-greeting-dynamic.tsx` | Client-component wrapper for TimeGreeting, same pattern as VisitorTimerDynamic |
+| TimeGreetingDynamic | `components/time-greeting-dynamic.tsx` | Client-component wrapper for TimeGreeting |
 | ScrollProgress | `components/scroll-progress.tsx` | Thin accent bar fixed at the top of every page. Width reflects how far the user has scrolled. Uses `requestAnimationFrame` to avoid layout thrashing |
 
 ### Assignment 3 — Modified Components
@@ -117,10 +133,10 @@ Validation runs on "Next" click — form cannot advance until the current step i
 | Visitor name | `localStorage` (`contact-form-name`) | Persistent | Saved from Name field, restored on next visit |
 | Form draft | `localStorage` (`contact-form-draft`) | Persistent | Full form draft (name + email + subject + message) auto-saved on every keystroke; cleared on successful submission |
 | Time greeting | JS / `Date` | Page load | Recomputed at top of each hour if user stays on page |
-| Visitor timer | React state (`useState`) | Page load | `setInterval` increments every second, cleaned up on unmount |
 | Filter/sort | React state | Page load | `{ query, category, sort }` — drives `useMemo` pipeline |
 | Form step | React state | Form session | `1 | 2 | 3` — controls which fieldset is visible |
 | Scroll progress | React state | Page load | Updated via `requestAnimationFrame` on scroll |
+| Back-to-top visibility | React state | Page load | Toggles after 400px of scrolling and returns the user to the top with smooth scrolling |
 
 ---
 
@@ -129,15 +145,16 @@ Validation runs on "Next" click — form cannot advance until the current step i
 | Technique | Where | Benefit |
 |-----------|-------|---------|
 | `useMemo` on filter+sort | `projects-client.tsx` | Recalculates only when query, category, or sort changes |
-| `dynamic({ ssr: false })` | timer + greeting wrappers | Prevents SSR/hydration mismatch for time-dependent components |
+| `dynamic({ ssr: false })` | time greeting wrapper | Prevents SSR/hydration mismatch for time-dependent content |
 | `Promise.all` | `github-stats.tsx` | Profile + repos fetched in parallel, not sequentially |
 | `IntersectionObserver` | `layout.tsx` scroll reveal | No `scroll` event listener — browser compositor thread handles it |
 | `requestAnimationFrame` | `scroll-progress.tsx` | Batches scroll updates to animation frames, prevents layout thrashing |
+| Passive scroll listener | `back-to-top.tsx` | Keeps the floating return-to-top control responsive without blocking scroll performance |
 | `io.unobserve()` after reveal | `layout.tsx` | Observer stops tracking elements after they animate in |
 | `next/image` | All images | Automatic WebP conversion, responsive `srcset`, lazy loading |
 | CSS font stacks | `globals.css` | No external font fetch during build; local fallbacks keep the site readable |
-| `aria-live="off"` on timer | `visitor-timer.tsx` | Prevents screen reader announcement every second |
 | Inline theme init script | `layout.tsx` | Theme applied synchronously before React hydration — no FOUC |
+| Optimized WebP assets | `public/images/` | Replaces multi-megabyte PNG references in the rendered app |
 
 ---
 
@@ -150,9 +167,9 @@ Validation runs on "Next" click — form cannot advance until the current step i
 - `role="alert"` on validation error messages (announced immediately)
 - `role="status"` on success banners (announced politely)
 - `role="progressbar"` with `aria-valuenow/min/max` on scroll progress bar
-- `aria-live="off"` on visitor timer to avoid disruptive announcements
 - `aria-current="step"` on active form step indicator
 - Skip-to-content link in root layout
+- Back-to-top button has a descriptive `aria-label` and keyboard-visible focus ring
 
 ---
 
@@ -187,3 +204,18 @@ Manual checks performed:
 - GitHub stats and quote widget with network throttling (slow 3G)
 - Scroll progress bar accuracy
 - Keyboard-only navigation through all interactive elements
+
+---
+
+## 10) Assignment 4 Finalization Notes
+
+Final polish for Assignment 4 focused on making the project ready to submit and present:
+
+- Updated README to describe the final Assignment 4 app instead of only Assignments 1-3.
+- Added presentation materials for the required 5-7 minute demonstration.
+- Added an Assignment 4 entry to the AI usage report.
+- Optimized large image assets and updated app references to use WebP files.
+- Replaced the low-value visitor timer with a lighter hero snapshot row showing age, focus areas, and location.
+- Added a floating back-to-top control for long-page navigation.
+- Restored the monochrome black/white/grey theme for a cleaner professional visual identity.
+- Re-ran lint and production build validation after the final changes.

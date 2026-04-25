@@ -127,7 +127,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 bg-[var(--header-bg)]/85 backdrop-blur-xl">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         <Link
           href="/"
           className="inline-flex items-center gap-3 rounded-full px-2 py-1 transition hover:bg-[var(--surface-subtle)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
@@ -183,7 +183,15 @@ export function SiteHeader() {
             aria-controls="mobile-menu"
             aria-label="Toggle navigation menu"
           >
-            <span aria-hidden="true">{isMenuOpen ? "X" : "="}</span>
+            {isMenuOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            )}
           </button>
         </div>
       </div>
@@ -191,7 +199,7 @@ export function SiteHeader() {
       {isMenuOpen ? (
         <nav
           id="mobile-menu"
-          className="border-t border-[var(--border)] bg-[var(--surface)] px-6 py-4 md:hidden"
+          className="border-t border-[var(--border)] bg-[var(--surface)] px-4 py-4 sm:px-6 md:hidden"
           aria-label="Mobile"
         >
           <ul className="flex flex-col gap-2">

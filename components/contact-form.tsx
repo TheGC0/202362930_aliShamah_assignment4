@@ -446,8 +446,11 @@ export function ContactForm() {
 
           {/* Success */}
           {status === "sent" && (
-            <div role="status" className="rounded-xl border border-green-500/30 bg-green-500/10 p-4">
-              <p className="text-sm font-medium text-green-700 dark:text-green-400">
+            <div
+              role="status"
+              className="rounded-xl border border-[var(--border)] bg-[var(--surface-subtle)] p-4"
+            >
+              <p className="text-sm font-medium text-[var(--text)]">
                 Email draft opened — just hit send in your email app!
               </p>
               <p className="mt-1 text-xs text-[var(--muted)]">

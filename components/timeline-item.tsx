@@ -12,9 +12,9 @@ export function TimelineItem({
   points,
 }: TimelineItemProps) {
   return (
-    <article className="group relative rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-soft)] transition duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-hover)]">
+    <article className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-soft)] transition duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-hover)]">
       <div
-        className="absolute left-0 top-0 h-full w-1 rounded-l-2xl bg-gradient-to-b from-[var(--accent)]/70 via-[var(--accent)]/40 to-transparent"
+        className="absolute bottom-6 left-0 top-6 w-1 rounded-r-full bg-gradient-to-b from-[var(--accent)]/70 via-[var(--accent)]/40 to-transparent"
         aria-hidden="true"
       />
       <div className="pl-3">

@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Suspense } from "react";
 
 import { AnalyticsPlaceholder } from "@/components/analytics-placeholder";
+import { BackToTop } from "@/components/back-to-top";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -155,12 +156,14 @@ export default function RootLayout({
           <ScrollProgress />
           <SiteHeader />
 
-          <main id="content" className="mx-auto w-full max-w-6xl px-6 pb-8 pt-10 sm:pt-14">
+          <main id="content" className="mx-auto w-full max-w-6xl px-4 pb-8 pt-8 sm:px-6 sm:pt-14">
             {children}
           </main>
 
           <SiteFooter />
         </div>
+
+        <BackToTop />
 
         <Suspense fallback={null}>
           <AnalyticsPlaceholder />
