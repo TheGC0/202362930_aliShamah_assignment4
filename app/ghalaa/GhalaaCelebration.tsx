@@ -23,38 +23,43 @@ interface Balloon {
   w: number; h: number; duration: string; delay: string;
 }
 
-/* ── Constants ──────────────────────────────────────────────────────── */
+/* ── Pink palette constants ─────────────────────────────────────────── */
 const FW_COLORS = [
-  "#FF6B6B","#FFD93D","#6BFFB8","#4ECDC4","#45B7D1",
-  "#FF6B9D","#C77DFF","#FFE66D","#F72585","#4CC9F0",
-  "#FFFFFF","#FFD700","#FF69B4","#00FF7F","#FF4500",
-  "#DA70D6","#40E0D0","#FF1493","#ADFF2F","#7B68EE",
+  "#FF69B4","#FF1493","#FFB6C1","#FF85C8","#FF6B9D",
+  "#FFD1DC","#F72585","#FF4D6D","#FFAFD7","#FC9BCA",
+  "#FF007F","#FFC0CB","#E91E63","#F48FB1","#FF4081",
+  "#FFFFFF","#FFD700","#FFE0EC","#FF80AB","#FF5BA3",
 ];
 const CONFETTI_COLORS = [
-  "#FF6B9D","#C77DFF","#FFD93D","#4CC9F0","#6BFFB8",
-  "#FF6B6B","#FFFFFF","#FFD700","#F72585","#45B7D1",
+  "#FF69B4","#FF1493","#FFB6C1","#FF85C8","#FFD1DC",
+  "#FF6B9D","#FFFFFF","#FFD700","#F72585","#FFAFD7",
 ];
 const BALLOON_COLORS = [
-  "#FF6B6B","#FFD93D","#6BFFB8","#4ECDC4",
-  "#C77DFF","#FF6B9D","#4CC9F0","#F72585",
+  "#FF69B4","#FF1493","#FFB6C1","#FF85C8",
+  "#FFD1DC","#FF6B9D","#F72585","#FFAFD7",
 ];
-const EMOJIS = ["🎉","🎈","🌟","💖","🎊","✨","🥳","🎁","🌸","💫"];
+const EMOJIS = ["🎉","🎈","🌸","💖","🎊","✨","🥳","🎁","🌷","💗"];
+
+// Video playlist: ghalla2 first, then ghalaa, then YouTube
+const VIDEO_SRC = ["/videos/ghalla2.MP4", "/videos/ghalaa.MP4"];
 
 /* ── Component ──────────────────────────────────────────────────────── */
 export function GhalaaCelebration() {
-  const canvasRef  = useRef<HTMLCanvasElement>(null);
-  const videoRef   = useRef<HTMLVideoElement>(null);
-  const ytRef      = useRef<HTMLIFrameElement>(null);
-  const shellsRef  = useRef<Shell[]>([]);
-  const animRef    = useRef<number>(0);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef  = useRef<HTMLVideoElement>(null);
+  const ytRef     = useRef<HTMLIFrameElement>(null);
+  const shellsRef = useRef<Shell[]>([]);
+  const animRef   = useRef<number>(0);
 
-  const [phase,      setPhase]      = useState<"dark" | "reveal" | "full">("dark");
-  const [confetti,   setConfetti]   = useState<ConfettiPiece[]>([]);
-  const [balloons,   setBalloons]   = useState<Balloon[]>([]);
-  const [videoError, setVideoError] = useState(false);
-  const [videoEnded, setVideoEnded] = useState(false);
+  const [phase,     setPhase]     = useState<"dark" | "reveal" | "full">("dark");
+  const [confetti,  setConfetti]  = useState<ConfettiPiece[]>([]);
+  const [balloons,  setBalloons]  = useState<Balloon[]>([]);
+  // 0 = ghalla2.MP4 · 1 = ghalaa.MP4 · 2 = YouTube
+  const [videoStep, setVideoStep] = useState<0 | 1 | 2>(0);
 
-  /* ── Generate random decorations client-side ────────────────────── */
+  const advance = () => setVideoStep(s => (Math.min(s + 1, 2)) as 0 | 1 | 2);
+
+  /* ── Random decorations (client-only) ───────────────────────────── */
   useEffect(() => {
     const rnd = () => Math.random();
     setConfetti(
@@ -124,7 +129,6 @@ export function GhalaaCelebration() {
           size: Math.random() * 3.5 + 0.4,
         });
       }
-      // bright white glitter
       for (let i = 0; i < 28; i++) {
         shell.particles.push({
           x: shell.x, y: shell.y,
@@ -137,9 +141,9 @@ export function GhalaaCelebration() {
     };
 
     let lastLaunch = 0;
-
     const draw = (time: number) => {
-      ctx.fillStyle = "rgba(0,0,12,0.16)";
+      // Pink-tinted dark trail
+      ctx.fillStyle = "rgba(20,0,10,0.16)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       if (time - lastLaunch > 480 + Math.random() * 320) {
@@ -166,9 +170,8 @@ export function GhalaaCelebration() {
           if (shell.y <= shell.targetY) burst(shell);
           return true;
         }
-
         shell.particles = shell.particles.filter(p => {
-          p.x  += p.vx; p.y += p.vy;
+          p.x += p.vx; p.y += p.vy;
           p.vy += 0.09;
           p.vx *= 0.988; p.vy *= 0.988;
           p.alpha -= 0.011;
@@ -201,15 +204,32 @@ export function GhalaaCelebration() {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
+  /* ── YouTube postMessage play ───────────────────────────────────── */
+  const sendPlay = () => {
+    const send = () =>
+      ytRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func: "playVideo", args: [] }),
+        "*"
+      );
+    send();
+    setTimeout(send, 800);
+    setTimeout(send, 2000);
+  };
+
+  const CAPTIONS = [
+    "💌 A special message just for you",
+    "🎬 And one more surprise...",
+    "🎵 Keep the celebration going!",
+  ];
+
   /* ── Render ─────────────────────────────────────────────────────── */
   return (
     <div className="ghalaa-root">
       <canvas ref={canvasRef} className="ghalaa-canvas" />
 
-      {/* Dark intro veil */}
       <div className={`ghalaa-veil${phase !== "dark" ? " ghalaa-veil--gone" : ""}`} />
 
-      {/* Confetti rain */}
+      {/* Confetti */}
       {phase === "full" && (
         <div className="confetti-container" aria-hidden="true">
           {confetti.map(c => (
@@ -251,7 +271,7 @@ export function GhalaaCelebration() {
         </div>
       )}
 
-      {/* Main celebration content */}
+      {/* Main content */}
       <div className={`ghalaa-content${phase === "full" ? " ghalaa-content--visible" : ""}`}>
         <div className="ghalaa-card">
 
@@ -264,42 +284,39 @@ export function GhalaaCelebration() {
 
           <div className="ghalaa-emojis" aria-hidden="true">
             {EMOJIS.map((e, i) => (
-              <span
-                key={i}
-                className="ghalaa-emoji"
-                style={{ animationDelay: `${i * 0.16}s` }}
-              >
+              <span key={i} className="ghalaa-emoji" style={{ animationDelay: `${i * 0.16}s` }}>
                 {e}
               </span>
             ))}
           </div>
 
           <p className="ghalaa-message">
-            Wishing you a day as magical and beautiful as you are ✨
+            Wishing you a day as magical and beautiful as you are 🌸
           </p>
 
-          {/* Video */}
+          {/* ── Video section ── */}
           <div className="ghalaa-video-section">
             <div className="ghalaa-video-glow">
 
-              {/* 1️⃣  Local video — plays first */}
-              {!videoError && !videoEnded && (
+              {/* Steps 0 & 1 — local videos */}
+              {videoStep < 2 && (
                 <video
+                  key={videoStep}
                   ref={videoRef}
-                  src="/videos/ghalaa.MP4"
+                  src={VIDEO_SRC[videoStep]}
                   controls
                   autoPlay
                   playsInline
                   muted
                   className="ghalaa-video"
                   onCanPlay={() => { videoRef.current?.play().catch(() => {}); }}
-                  onError={() => setVideoError(true)}
-                  onEnded={() => setVideoEnded(true)}
+                  onEnded={advance}
+                  onError={advance}
                 />
               )}
 
-              {/* 2️⃣  YouTube — auto-starts at 18 s after local video ends */}
-              {videoEnded && (
+              {/* Step 2 — YouTube */}
+              {videoStep === 2 && (
                 <iframe
                   key="yt"
                   ref={ytRef}
@@ -308,32 +325,12 @@ export function GhalaaCelebration() {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                   className="ghalaa-yt-iframe ghalaa-yt-fadein"
-                  onLoad={() => {
-                    // Send play command via IFrame API as a reliable fallback
-                    const send = () =>
-                      ytRef.current?.contentWindow?.postMessage(
-                        JSON.stringify({ event: "command", func: "playVideo", args: [] }),
-                        "*"
-                      );
-                    send();
-                    setTimeout(send, 800);
-                    setTimeout(send, 2000);
-                  }}
+                  onLoad={sendPlay}
                 />
               )}
 
-              {/* Error fallback */}
-              {videoError && !videoEnded && (
-                <div className="ghalaa-video-placeholder">
-                  <span>🎬</span>
-                  <span>Video not found at <code>public/videos/ghalaa.MP4</code></span>
-                </div>
-              )}
-
             </div>
-            <p className="ghalaa-video-caption">
-              {videoEnded ? "🎵 Keep the celebration going!" : "💌 A special message just for you"}
-            </p>
+            <p className="ghalaa-video-caption">{CAPTIONS[videoStep]}</p>
           </div>
 
         </div>
